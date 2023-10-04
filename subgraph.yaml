@@ -1,0 +1,28 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: RiskFramework
+    network: matic
+    source:
+      startBlock: 48322950
+      address: "0x44458947c3e264791d1a68de577f841a663d95a8"
+      abi: RiskFramework
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Account
+      abis:
+        - name: RiskFramework
+          file: ./abis/RiskFramework.json
+      eventHandlers:
+        - event: ScoreSet(indexed uint256,indexed address,uint128)
+          handler: handleScoreSet
+        - event: TagSet(indexed uint256,indexed address,indexed bytes32)
+          handler: handleTagSet
+        - event: TagRemoved(indexed uint256,indexed address,indexed bytes32)
+          handler: handleTagRemoved
+      file: ./src/mappings/riskFrameworkMapping.ts

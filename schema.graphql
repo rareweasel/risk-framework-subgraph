@@ -1,0 +1,123 @@
+
+type EthTx @entity {
+  " Transaction hash + Log Index "
+  id: ID!
+  " Log index related to the event. A Transaction might contain multiple events "
+  logIndex: BigInt!
+  " The transaction sender "
+  from: Bytes!
+  " Gas price used in the transaction "
+  gasPrice: BigInt!
+  " Gas limit used in the transaction "
+  gasLimit: BigInt!
+  " Transaction hash "
+  hash: Bytes!
+  " The transaction index "
+  index: BigInt!
+  " Address that received the transaction "
+  to: Bytes!
+  " Ether value sent in the transaction "
+  value: BigInt!
+  " Timestamp when the transaction was executed "
+  timestamp: BigInt!
+  " Gas limit used in the current block "
+  blockGasLimit: BigInt!
+  " Block number "
+  blockNumber: BigInt!
+}
+
+type Target @entity {
+  " Target + Network Id. "
+  id: ID!
+  " The target address (vault/strategy). It might be a v2 or v3 strategy/vault. "
+  address: Bytes!
+  " The target URL based on the network id. "
+  targetUrl: String!
+  " The network id where the target is deployed. "
+  networkId: BigInt!
+  " Latest score set for the target. "
+  score: Score
+  " List of scores set for the target. "
+  scoresHistory: [ScoreUpdate!]! @derivedFrom(field: "target")
+  tags: [Tag!]! @derivedFrom(field: "target")
+  " List of tags set for the target. "
+  tagsHistory: [TagUpdate!]! @derivedFrom(field: "target")
+  " Timestamp when the target was created. "
+  timestamp: BigInt!
+  " Block number where the target was created. "
+  blockNumber: BigInt!
+  " The transaction where the target was created. "
+  createdAt: EthTx!
+}
+
+type Score @entity {
+  " Tx Hash + Log Index "
+  id: ID!
+  " The score value in a packed format "
+  score: BigInt!
+  " The score values in a human readable format. This field is in string format since contains multiple scores. "
+  scores: String!
+  " The average score value in a human readable format. The value is multiplied by 1000 to avoid precision losses. "
+  averageScore: BigInt!
+  " The target reference. It might be a v2 or v3 target. "
+  target: Target!
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the score was set. "
+  blockNumber: BigInt!
+  " The transaction where the score was set. "
+  createdAt: EthTx!
+}
+
+type ScoreUpdate @entity {
+  " Tx Hash + Log Index "
+  id: ID!
+  " The score value in a packed format. "
+  score: BigInt!
+  " The score values in a human readable format. This field is in string format since contains multiple scores. "
+  scores: String!
+  " The average score value in a human readable format. The value is multiplied by 1000 to avoid precision losses. "
+  averageScore: BigInt!
+  " The target reference. It might be a v2 or v3 target. "
+  target: Target!
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the score was set. "
+  blockNumber: BigInt!
+  " The transaction where the score was set. "
+  createdAt: EthTx!
+}
+
+type Tag @entity {
+  " Target + Tag. "
+  id: ID!
+  " The target references. "
+  target: Target!
+  " The tag in string format. "
+  value: String!
+  " Identifies whether this tag for the target has been removed. "
+  removed: Boolean!
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the tag was set. "
+  blockNumber: BigInt!
+  " The transaction where the tag was created. "
+  createdAt: EthTx!
+}
+
+type TagUpdate @entity {
+  " Target + Tag. "
+  id: ID!
+  " The target references. "
+  target: Target!
+  " The tag in string format. "
+  value: String!
+  " Identifies whether this tag for the target has been removed. "
+  removed: Boolean!
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the tag was set. "
+  blockNumber: BigInt!
+  " The transaction where the tag was created or removed. "
+  txAt: EthTx!
+}
