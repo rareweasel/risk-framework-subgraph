@@ -1,12 +1,9 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { EthTx, LpV2Vault, LpV2Strategy } from "../../generated/schema";
-import { VaultV2 as VaultV2Contract } from "../../generated/curveLpVaultFactory/VaultV2";
-import { ZERO_ADDRESS } from "./consts";
+import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { EthTx, LpV2Vault, LpV2Strategy } from '../../generated/schema';
+import { VaultV2 as VaultV2Contract } from '../../generated/curveLpVaultFactory/VaultV2';
+import { ZERO_ADDRESS } from './consts';
 
-
-function getStrategyId(
-  strategy: Address,
-): string {
+function getStrategyId(strategy: Address): string {
   return strategy.toHexString();
 }
 

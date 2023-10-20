@@ -1,10 +1,7 @@
-import { Address } from "@graphprotocol/graph-ts";
-import { EthTx, LpV2VaultFactory, LpV2Vault } from "../../generated/schema";
+import { Address } from '@graphprotocol/graph-ts';
+import { EthTx, LpV2VaultFactory, LpV2Vault } from '../../generated/schema';
 
-
-function getVaultId(
-  vault: Address,
-): string {
+function getVaultId(vault: Address): string {
   return vault.toHexString();
 }
 

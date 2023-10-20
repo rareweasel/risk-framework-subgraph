@@ -6,7 +6,7 @@
     "prepare:base": "mustache config/base.json subgraph.template.yaml > subgraph.yaml",
     "prepare:polygon": "mustache config/polygon.json subgraph.template.yaml > subgraph.yaml",
     "prepare:optimism": "mustache config/optimism.json subgraph.template.yaml > subgraph.yaml",
-    "codegen:ethereum": "yarn prepare::ethereum && graph codegen",
+    "codegen:ethereum": "yarn prepare:ethereum && graph codegen",
     "codegen:base": "yarn prepare:base && graph codegen",
     "codegen:polygon": "yarn prepare:polygon && graph codegen",
     "codegen:optimism": "yarn prepare:optimism && graph codegen",

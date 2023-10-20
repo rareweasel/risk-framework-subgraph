@@ -4,7 +4,9 @@ import { getTimestampInMs } from './commons';
 import { ZERO_ADDRESS } from './consts';
 
 export function createEthTxFromEvent(event: ethereum.Event): EthTx {
-  log.debug('[EthTxs] Create ETH Tx from hash {}', [event.transaction.hash.toHexString()]);
+  log.debug('[EthTxs] Create ETH Tx from hash {}', [
+    event.transaction.hash.toHexString()
+  ]);
   let transaction = _getOrCreateEthTx(
     event.transaction,
     event.logIndex,
@@ -13,10 +15,7 @@ export function createEthTxFromEvent(event: ethereum.Event): EthTx {
   return transaction;
 }
 
-function getEthTxId(
-  txHash: string,
-  logIndex: string
-): string {
+function getEthTxId(txHash: string, logIndex: string): string {
   return txHash.concat('-').concat(logIndex.toString());
 }
 
@@ -30,13 +29,10 @@ function _getOrCreateEthTx(
     [
       ethTransaction.hash.toHexString(),
       logIndex.toString(),
-      ethTransaction.index.toString(),
+      ethTransaction.index.toString()
     ]
   );
-  let id = getEthTxId(
-    ethTransaction.hash.toHexString(),
-    logIndex.toString()
-  );
+  let id = getEthTxId(ethTransaction.hash.toHexString(), logIndex.toString());
   let entity = EthTx.load(id);
   if (entity === null) {
     // Special handling for contract creates since ethTransaction.to will be null.

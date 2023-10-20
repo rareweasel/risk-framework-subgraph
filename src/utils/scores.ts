@@ -1,7 +1,7 @@
-import { BigInt, dataSource } from "@graphprotocol/graph-ts";
-import { EthTx, Score, ScoreUpdate, Target } from "../../generated/schema";
-import { getId } from "./commons";
-import { RiskFramework } from "../../generated/RiskFramework/RiskFramework";
+import { BigInt, dataSource } from '@graphprotocol/graph-ts';
+import { EthTx, Score, ScoreUpdate, Target } from '../../generated/schema';
+import { getId } from './commons';
+import { RiskFramework } from '../../generated/RiskFramework/RiskFramework';
 
 function getAverageScore(score: BigInt): BigInt {
   let riskFrameworkContract = RiskFramework.bind(dataSource.address());
@@ -12,7 +12,7 @@ function getAverageScore(score: BigInt): BigInt {
 function getScoresAsString(score: BigInt): string {
   let riskFrameworkContract = RiskFramework.bind(dataSource.address());
   let scoresList = riskFrameworkContract.fromScoreToList(score);
-  return scoresList.getScoresList().join(",");
+  return scoresList.getScoresList().join(',');
 }
 
 export function updateOrCreateScore(

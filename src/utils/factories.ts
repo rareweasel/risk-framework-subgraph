@@ -1,9 +1,7 @@
-import { Address } from "@graphprotocol/graph-ts";
-import { EthTx, LpV2VaultFactory } from "../../generated/schema";
+import { Address } from '@graphprotocol/graph-ts';
+import { EthTx, LpV2VaultFactory } from '../../generated/schema';
 
-function getFactoryId(
-  factory: Address,
-): string {
+function getFactoryId(factory: Address): string {
   return factory.toHexString();
 }
 

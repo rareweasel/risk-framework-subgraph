@@ -1,18 +1,11 @@
 import { log } from '@graphprotocol/graph-ts';
 import { EthTx, Tag, TagUpdate, Target } from '../../generated/schema';
 
-function getTagId(
-  target: string,
-  tag: string,
-): string {
+function getTagId(target: string, tag: string): string {
   return target.concat('-').concat(tag.toString());
 }
 
-export function getOrCreateTag(
-  target: Target,
-  tag: string,
-  tx: EthTx
-): Tag {
+export function getOrCreateTag(target: Target, tag: string, tx: EthTx): Tag {
   let id = getTagId(target.address.toHexString(), tag);
   let entity = Tag.load(id);
   if (entity == null) {
@@ -28,11 +21,7 @@ export function getOrCreateTag(
   return entity as Tag;
 }
 
-export function removedTag(
-  target: Target,
-  tag: string,
-  tx: EthTx
-): void {
+export function removedTag(target: Target, tag: string, tx: EthTx): void {
   let id = getTagId(target.address.toHexString(), tag);
   log.info('[Tags] Remove tag id {} from target {}', [id, target.id]);
   let tags = target.tags.load();
