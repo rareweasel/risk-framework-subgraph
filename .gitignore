@@ -114,3 +114,5 @@ out/
 
 #generated
 generated/
+
+subgraph.yaml

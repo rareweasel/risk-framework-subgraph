@@ -8,6 +8,7 @@ import * as ethTxs from "../utils/ethTxs";
 import * as scores from "../utils/scores";
 import * as targets from "../utils/targets";
 import * as tags from "../utils/tags";
+import * as strategies from "../utils/strategies";
 import { log } from "@graphprotocol/graph-ts";
 import { FALSE, TRUE } from "../utils/consts";
 
@@ -25,6 +26,11 @@ export function handleScoreSet(event: ScoreSetEvent): void {
   scores.createScoreUpdate(
     target,
     event.params.score,
+    scoredAt
+  );
+  strategies.setIsOnRiskFrameworkIfNeeded(
+    event.params.target,
+    TRUE,
     scoredAt
   );
   // Update the target with the latest score.

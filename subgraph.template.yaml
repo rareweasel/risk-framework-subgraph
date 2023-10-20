@@ -1,0 +1,61 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  {{#RiskFramework}}
+  - kind: ethereum/contract
+    name: RiskFramework
+    network: {{network}}
+    source:
+      abi: RiskFramework
+      address: "{{address}}"
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Account
+      abis:
+        - name: RiskFramework
+          file: ./abis/RiskFramework.json
+      eventHandlers:
+        - event: ScoreSet(indexed uint256,indexed address,uint128)
+          handler: handleScoreSet
+        - event: TagSet(indexed uint256,indexed address,indexed bytes32)
+          handler: handleTagSet
+        - event: TagRemoved(indexed uint256,indexed address,indexed bytes32)
+          handler: handleTagRemoved
+      file: ./src/mappings/riskFrameworkMapping.ts
+  {{/RiskFramework}}
+  {{#Factories}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      abi: GenericLpVaultFactory
+      address: "{{address}}"
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Account
+      abis:
+        - name: GenericLpVaultFactory
+          file: ./abis/GenericLpVaultFactory.json
+        - name: VaultV2
+          file: ./abis/VaultV2.json
+      eventHandlers:
+        # Aerodrome & Velodrome
+        - event: NewAutomatedVault(indexed uint256,indexed address,address,indexed address,address)
+          handler: handleNewAutomatedVault_1
+        # Curve
+        - event: NewAutomatedVault(indexed uint256,indexed address,address,indexed address,address,address,address)
+          handler: handleNewAutomatedVault_2
+        # Balancer
+        - event: NewAutomatedVault(indexed uint256,indexed address,address,indexed address,address,address)
+          handler: handleNewAutomatedVault_3
+      file: ./src/mappings/genericLpVaultFactoryMapping.ts
+  {{/Factories}}
