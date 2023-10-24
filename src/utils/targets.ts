@@ -27,17 +27,14 @@ function getNetworkUrl(networkId: BigInt, target: string): string {
   }
 }
 
-function getTargetId(
-  target: Address,
-  networkId: BigInt,
-): string {
-  return target.toHexString().concat('-').concat(networkId.toString());
+function getTargetId(target: Address, networkId: BigInt): string {
+  return target
+    .toHexString()
+    .concat('-')
+    .concat(networkId.toString());
 }
 
-export function getTarget(
-  target: Address,
-  networkId: BigInt,
-): Target {
+export function getTarget(target: Address, networkId: BigInt): Target {
   let id = getTargetId(target, networkId);
   let entity = Target.load(id);
   return entity as Target;
@@ -63,10 +60,7 @@ export function getOrCreateTarget(
   return entity as Target;
 }
 
-export function updateTarget(
-  target: Target,
-  latestScore: Score
-): Target {
+export function updateTarget(target: Target, latestScore: Score): Target {
   target.score = latestScore.id;
   target.save();
   return target;
@@ -82,11 +76,7 @@ export function updateTags(
   let entity = Target.load(id) as Target;
 
   for (let i = 0; i < tagsList.length; i++) {
-    tags.getOrCreateTag(
-      entity,
-      tagsList[i].toHexString(),
-      createdAt
-    );
+    tags.getOrCreateTag(entity, tagsList[i].toHexString(), createdAt);
   }
   entity.save();
   return entity;

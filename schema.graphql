@@ -121,3 +121,58 @@ type TagUpdate @entity {
   " The transaction where the tag was created or removed. "
   txAt: EthTx!
 }
+
+type LpV2VaultFactory @entity {
+  " Factory address. "
+  id: ID!
+  " The factory address. "
+  factory: Bytes!
+  " The list of vaults created by this factory. "
+  vaults: [LpV2Vault!]! @derivedFrom(field: "factory")
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the factory was created. "
+  blockNumber: BigInt!
+  " The transaction where the factory was created. "
+  createdAt: EthTx!
+}
+
+type LpV2Vault @entity {
+  " Vault Address. "
+  id: ID!
+  " The vault address. "
+  vault: Bytes!
+  " The Curve gauge address. "
+  gauge: Bytes!
+  " The LP token address. "
+  lpToken: Bytes!
+  " The factory address that created this vault. "
+  factory: LpV2VaultFactory!
+  " The list of strategies associated to this vault. "
+  strategies: [LpV2Strategy!]! @derivedFrom(field: "vault")
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the tag was set. "
+  blockNumber: BigInt!
+  " The transaction where the vault was created. "
+  createdAt: EthTx!
+}
+
+type LpV2Strategy @entity {
+  " Strategy Address. "
+  id: ID!
+  " The strategy address. "
+  strategy: Bytes!
+  " The reference to the vault. "
+  vault: LpV2Vault!
+  " True if this strategy is tracked on the Risk Framework. Otherwise, it is false. This is updated when a score is set. "
+  isOnRiskFramework: Boolean!
+  " Timestamp when the transaction was executed. "
+  timestamp: BigInt!
+  " Block number where the strategy was created. "
+  blockNumber: BigInt!
+  " The transaction where the strategy was set on the risk framework. "
+  setOnRiskFrameworkAt: EthTx
+  " The transaction where the strategy was created. "
+  createdAt: EthTx!
+}

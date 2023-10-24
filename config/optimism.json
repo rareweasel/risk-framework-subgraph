@@ -1,0 +1,11 @@
+{
+  "network": "optimism",
+  "RiskFramework": [],
+  "Factories": [
+    {
+      "name": "velodromeLpVaultFactory",
+      "address": "0x8eb53a4fD9D2727a49E9e68a32108C18049bFf86",
+      "startBlock": 106201930
+    }
+  ]
+}

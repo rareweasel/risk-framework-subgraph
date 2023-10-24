@@ -1,0 +1,11 @@
+{
+  "network": "base",
+  "RiskFramework": [],
+  "Factories": [
+    {
+      "name": "aerodromeLpVaultFactory",
+      "address": "0x2d12caFfa46ab3b6c5cEb224620de8b4DE3cDff1",
+      "startBlock": 3349100
+    }
+  ]
+}

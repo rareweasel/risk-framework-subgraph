@@ -1,5 +1,5 @@
-import { BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { EthTx } from "../../generated/schema";
+import { BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { EthTx } from '../../generated/schema';
 
 export function getTimeInMs(time: BigInt): BigInt {
   return time.times(BigInt.fromI32(1000));
@@ -12,6 +12,6 @@ export function getTimestampInMs(block: ethereum.Block): BigInt {
 export function getId(tx: EthTx): string {
   return tx.hash
     .toHexString()
-    .concat("-")
+    .concat('-')
     .concat(tx.logIndex.toString());
 }

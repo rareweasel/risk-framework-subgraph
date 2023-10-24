@@ -2,9 +2,19 @@
   "name": "@yearn/risk-framework-subgraph",
   "license": "MIT",
   "scripts": {
-    "codegen": "graph codegen",
+    "prepare:ethereum": "mustache config/ethereum.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:base": "mustache config/base.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:polygon": "mustache config/polygon.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:optimism": "mustache config/optimism.json subgraph.template.yaml > subgraph.yaml",
+    "codegen:ethereum": "yarn prepare:ethereum && graph codegen",
+    "codegen:base": "yarn prepare:base && graph codegen",
+    "codegen:polygon": "yarn prepare:polygon && graph codegen",
+    "codegen:optimism": "yarn prepare:optimism && graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ yearn/yearn-risk-framework",
+    "deploy:polygon": "graph deploy --product hosted-service yearn/yearn-risk-framework",
+    "deploy:ethereum": "graph deploy --product hosted-service yearn/yearn-risk-framework-ethereum",
+    "deploy:optimism": "graph deploy --product hosted-service yearn/yearn-risk-framework-optimism",
+    "deploy:base": "graph deploy --product hosted-service yearn/yearn-risk-framework-base",
     "create-local": "graph create --node http://localhost:8020/ yearn/yearn-risk-framework",
     "remove-local": "graph remove --node http://localhost:8020/ yearn/yearn-risk-framework",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 yearn/yearn-risk-framework",
@@ -14,5 +24,8 @@
     "@graphprotocol/graph-cli": "0.58.0",
     "@graphprotocol/graph-ts": "0.31.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.2" }
+  "devDependencies": {
+    "matchstick-as": "0.5.2",
+    "mustache": "^4.2.0"
+  }
 }
