@@ -6,7 +6,7 @@
 `graph auth --product hosted-service <access-token>`
 
 - Deploy
-`graph deploy:network`
+`yarn deploy:network`
 
 > network can be `base`, `polygon`, `ethereum` or `optimism`.
 

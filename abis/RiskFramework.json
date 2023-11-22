@@ -101,6 +101,37 @@
       {
         "indexed": true,
         "internalType": "uint256",
+        "name": "network",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "fromTarget",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "toTarget",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "score",
+        "type": "uint128"
+      }
+    ],
+    "name": "ScoreCopied",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
         "name": "_network",
         "type": "uint256"
       },
@@ -171,157 +202,403 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "network",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
+      }
+    ],
+    "name": "TargetStatusSet",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "ACTIVE",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "AVERAGE_PRECISION",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "BITS_PER_SCORES",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "CONFIGURATOR_ROLE",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "INACTIVE",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "MAX_SCORES",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "MAX_SCORES_BITS",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_fromTarget",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_toTargets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "_tagsList",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "copyScores",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "currentScores",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint8[]", "name": "_scoresList", "type": "uint8[]" }
+      {
+        "internalType": "uint8[]",
+        "name": "_scoresList",
+        "type": "uint8[]"
+      }
     ],
     "name": "fromListToScore",
     "outputs": [
-      { "internalType": "uint128", "name": "score", "type": "uint128" },
-      { "internalType": "uint128", "name": "averageScore", "type": "uint128" }
+      {
+        "internalType": "uint128",
+        "name": "score",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "averageScore",
+        "type": "uint128"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint128", "name": "_score", "type": "uint128" }
+      {
+        "internalType": "uint128",
+        "name": "_score",
+        "type": "uint128"
+      }
     ],
     "name": "fromScoreToList",
     "outputs": [
-      { "internalType": "uint8[]", "name": "scoresList", "type": "uint8[]" },
-      { "internalType": "uint128", "name": "averageScore", "type": "uint128" }
+      {
+        "internalType": "uint8[]",
+        "name": "scoresList",
+        "type": "uint8[]"
+      },
+      {
+        "internalType": "uint128",
+        "name": "averageScore",
+        "type": "uint128"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_target", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      }
     ],
     "name": "getNetworksByTarget",
     "outputs": [
-      { "internalType": "uint256[]", "name": "networks", "type": "uint256[]" }
+      {
+        "internalType": "uint256[]",
+        "name": "networks",
+        "type": "uint256[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      }
     ],
     "name": "getRoleAdmin",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "uint256", "name": "index", "type": "uint256" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
     ],
     "name": "getRoleMember",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      }
     ],
     "name": "getRoleMemberCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address", "name": "_target", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      }
     ],
     "name": "getScoresByTarget",
-    "outputs": [{ "internalType": "uint128", "name": "", "type": "uint128" }],
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address", "name": "_target", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      }
     ],
     "name": "getTargetInfo",
     "outputs": [
-      { "internalType": "uint128", "name": "scores", "type": "uint128" },
-      { "internalType": "uint8[]", "name": "scoresList", "type": "uint8[]" },
-      { "internalType": "uint128", "name": "averageScore", "type": "uint128" },
-      { "internalType": "bytes32[]", "name": "tagsList", "type": "bytes32[]" }
+      {
+        "internalType": "uint128",
+        "name": "scores",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint8[]",
+        "name": "scoresList",
+        "type": "uint8[]"
+      },
+      {
+        "internalType": "uint128",
+        "name": "averageScore",
+        "type": "uint128"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "tagsList",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "_tag", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "_tag",
+        "type": "bytes32"
+      }
     ],
     "name": "getTargetsByTag",
     "outputs": [
-      { "internalType": "address[]", "name": "targets", "type": "address[]" }
+      {
+        "internalType": "address[]",
+        "name": "targets",
+        "type": "address[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "grantRole",
     "outputs": [],
@@ -330,19 +607,69 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "hasRole",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address[]", "name": "_targets", "type": "address[]" },
-      { "internalType": "bytes32[]", "name": "_tagsList", "type": "bytes32[]" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      }
+    ],
+    "name": "isTargetActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "_tagsList",
+        "type": "bytes32[]"
+      }
     ],
     "name": "removeTags",
     "outputs": [],
@@ -351,8 +678,16 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "renounceRole",
     "outputs": [],
@@ -361,8 +696,16 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "revokeRole",
     "outputs": [],
@@ -371,9 +714,21 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address[]", "name": "_targets", "type": "address[]" },
-      { "internalType": "uint128", "name": "_score", "type": "uint128" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint128",
+        "name": "_score",
+        "type": "uint128"
+      }
     ],
     "name": "setScore",
     "outputs": [],
@@ -382,10 +737,26 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address[]", "name": "_targets", "type": "address[]" },
-      { "internalType": "bytes32[]", "name": "_tagsList", "type": "bytes32[]" },
-      { "internalType": "uint128[]", "name": "_scores", "type": "uint128[]" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "_tagsList",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "uint128[]",
+        "name": "_scores",
+        "type": "uint128[]"
+      }
     ],
     "name": "setScoreAndTags",
     "outputs": [],
@@ -394,10 +765,26 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address[]", "name": "_targets", "type": "address[]" },
-      { "internalType": "bytes32[]", "name": "_tagsList", "type": "bytes32[]" },
-      { "internalType": "uint128", "name": "_score", "type": "uint128" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "_tagsList",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "uint128",
+        "name": "_score",
+        "type": "uint128"
+      }
     ],
     "name": "setScoreAndTags",
     "outputs": [],
@@ -406,9 +793,21 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_network", "type": "uint256" },
-      { "internalType": "address[]", "name": "_targets", "type": "address[]" },
-      { "internalType": "bytes32[]", "name": "_tagsList", "type": "bytes32[]" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "_tagsList",
+        "type": "bytes32[]"
+      }
     ],
     "name": "setTags",
     "outputs": [],
@@ -417,10 +816,43 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+      {
+        "internalType": "uint256",
+        "name": "_network",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_targets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
+      }
+    ],
+    "name": "setTargetsStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
     ],
     "name": "supportsInterface",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   }

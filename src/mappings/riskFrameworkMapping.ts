@@ -1,7 +1,9 @@
 import {
   ScoreSet as ScoreSetEvent,
   TagSet as TagSetEvent,
-  TagRemoved as TagRemovedEvent
+  TagRemoved as TagRemovedEvent,
+  ScoreCopied as ScoreCopiedEvent,
+  TargetStatusSet as TargetStatusSetEvent
 } from '../../generated/RiskFramework/RiskFramework';
 
 import * as ethTxs from '../utils/ethTxs';
@@ -53,4 +55,25 @@ export function handleTagRemoved(event: TagRemovedEvent): void {
   let target = targets.getTarget(event.params.target, event.params._network);
   tags.createTagUpdate(target, event.params.tag.toString(), TRUE, tagRemovedAt);
   tags.removedTag(target, event.params.tag.toString(), tagRemovedAt);
+}
+
+export function handleScoreCopied(event: ScoreCopiedEvent): void {
+  log.info('[RiskFramework] Handle ScoreCopied tx: {}', [
+    event.transaction.hash.toHexString()
+  ]);
+  let scoreCopiedTx = ethTxs.createEthTxFromEvent(event);
+
+  let fromTarget = targets.getTarget(event.params.fromTarget, event.params.network);
+  let toTarget = targets.getTarget(event.params.toTarget, event.params.network);
+
+  targets.updateCopiedFrom(scoreCopiedTx, toTarget, fromTarget);
+}
+
+export function handleTargetStatusSet(event: TargetStatusSetEvent): void {
+  log.info('[RiskFramework] Handle TargetStatusSet tx: {}', [
+    event.transaction.hash.toHexString()
+  ]);
+  let targetStatusSetTx = ethTxs.createEthTxFromEvent(event);
+  let target = targets.getTarget(event.params.target, event.params.network);
+  targets.updateStatus(targetStatusSetTx, target, event.params.isActive);
 }

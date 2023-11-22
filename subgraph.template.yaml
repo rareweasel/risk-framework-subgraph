@@ -26,6 +26,12 @@ dataSources:
           handler: handleTagSet
         - event: TagRemoved(indexed uint256,indexed address,indexed bytes32)
           handler: handleTagRemoved
+        - event: TagRemoved(indexed uint256,indexed address,indexed bytes32)
+          handler: handleTagRemoved
+        - event: ScoreCopied(indexed uint256,indexed address,indexed address,uint128)
+          handler: handleScoreCopied
+        - event: TargetStatusSet(indexed uint256,indexed address,indexed bool)
+          handler: handleTargetStatusSet
       file: ./src/mappings/riskFrameworkMapping.ts
   {{/RiskFramework}}
   {{#Factories}}
