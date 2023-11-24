@@ -53,8 +53,10 @@ export function getOrCreateTarget(
     entity.targetUrl = getNetworkUrl(networkId, target.toHexString());
     entity.networkId = networkId;
     entity.createdAt = tx.id;
+    entity.isActiveUpdatedAt = tx.id;
     entity.blockNumber = tx.blockNumber;
     entity.timestamp = tx.timestamp;
+    entity.isActive = true;
     entity.save();
   }
   return entity as Target;
@@ -62,6 +64,20 @@ export function getOrCreateTarget(
 
 export function updateTarget(target: Target, latestScore: Score): Target {
   target.score = latestScore.id;
+  target.save();
+  return target;
+}
+
+export function updateStatus(tx: EthTx, target: Target, isActive: boolean): Target {
+  target.isActive = isActive;
+  target.isActiveUpdatedAt = tx.id;
+  target.save();
+  return target;
+}
+
+export function updateCopiedFrom(tx: EthTx, target: Target, fromTarget: Target): Target {
+  target.copiedFrom = fromTarget.id;
+  target.copiedFromAt = tx.id;
   target.save();
   return target;
 }

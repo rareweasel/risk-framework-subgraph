@@ -37,10 +37,15 @@ type Target @entity {
   networkId: BigInt!
   " Latest score set for the target. "
   score: Score
+  " Identifies whether this target is still active or not. A non-active target means that it is not being used in the protocol anymore. "
+  isActive: Boolean
+  " Target reference where the current target was copied from. If the target was not copied, this field is null. "
+  copiedFrom: Target
   " List of scores set for the target. "
   scoresHistory: [ScoreUpdate!]! @derivedFrom(field: "target")
-  tags: [Tag!]! @derivedFrom(field: "target")
   " List of tags set for the target. "
+  tags: [Tag!]! @derivedFrom(field: "target")
+  " List of tags set in the past for the target. "
   tagsHistory: [TagUpdate!]! @derivedFrom(field: "target")
   " Timestamp when the target was created. "
   timestamp: BigInt!
@@ -48,6 +53,10 @@ type Target @entity {
   blockNumber: BigInt!
   " The transaction where the target was created. "
   createdAt: EthTx!
+  " The transaction where the isActive value was updated. "
+  isActiveUpdatedAt: EthTx!
+  " The transaction where the copiedFrom value was updated. "
+  copiedFromAt: EthTx
 }
 
 type Score @entity {
